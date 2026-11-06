@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fake Account Detector AI | Cybersecurity AI Platform</title>
+  <meta name="description" content="AI-Based Fake Social Media Account Detection System using Machine Learning to assess account authenticity and risk score.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Announcement Banner -->
+  <aside class="prototype-banner" role="complementary" aria-label="Prototype Notice">
+    <div class="container banner-inner">
+      <span class="badge-pill">DEMONSTRATION PROTOTYPE</span>
+      <p>Educational AI System for College Hackathon — Probability estimates derived from Scikit-Learn Random Forest Classifier.</p>
+      <div id="backend-status-pill" class="status-pill status-connecting">
+        <span class="status-dot"></span>
+        <span id="backend-status-text">Connecting to Backend...</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Navigation Bar -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="#home" class="brand-logo">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Fake Account Detector <span class="text-gradient">AI</span></span>
+          <span class="brand-tag">Cybersecurity Suite</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#detect" class="nav-link">Detect Account</a>
+        <a href="#why-it-matters" class="nav-link">Why It Matters</a>
+        <a href="#how-it-works" class="nav-link">How It Works</a>
+        <a href="#about" class="nav-link">About</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#detect" class="btn btn-sm btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+          </svg>
+          Analyze Account
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+      <div class="glow-orb orb-1"></div>
+      <div class="glow-orb orb-2"></div>
+      
+      <div class="container hero-content">
+        <div class="hero-tag">
+          <span class="radar-dot"></span>
+          Machine Learning Social Media Forensics
+        </div>
+
+        <h1 class="hero-title">
+          Detect Fake Social Media Accounts with <span class="text-gradient">Artificial Intelligence</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          An intelligent machine learning assessment tool that evaluates publicly observable profile features to identify automated bots, spam farms, and suspicious accounts with instant risk quantification.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#detect" class="btn btn-lg btn-primary pulse-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            Analyze Account Now
+          </a>
+          <a href="#how-it-works" class="btn btn-lg btn-secondary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            Explore Methodology
+          </a>
+        </div>
+
+        <!-- Metric Highlights Strip -->
+        <div class="metrics-strip">
+          <div class="metric-item">
+            <span class="metric-value text-gradient" id="hero-model-acc">99.8%</span>
+            <span class="metric-label">Model Evaluation Accuracy</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-item">
+            <span class="metric-value">8 Key Signals</span>
+            <span class="metric-label">Observable Behavioral Signals</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-item">
+            <span class="metric-value">&lt; 50ms</span>
+            <span class="metric-label">Real-Time Flask Inference</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-item">
+            <span class="metric-value text-emerald">100% Private</span>
+            <span class="metric-label">No Passwords or Tokens Needed</span>
+          </div>
+        </div>
+
+        <!-- 3 Feature Cards -->
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper icon-ai">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <h3 class="feature-title">1. AI-Powered Detection</h3>
+            <p class="feature-text">
+              Utilizes an ensemble Random Forest classifier trained to detect non-linear anomalies in follow ratios, activity tempo, and handle characteristics.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrapper icon-risk">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+              </svg>
+            </div>
+            <h3 class="feature-title">2. Account Risk Analysis</h3>
+            <p class="feature-text">
+              Calculates an empirical 0% to 100% risk probability score alongside granular trust and danger factors for full analytical transparency.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrapper icon-instant">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 14 14"/>
+              </svg>
+            </div>
+            <h3 class="feature-title">3. Instant Results</h3>
+            <p class="feature-text">
+              Zero delays. Submit standard account metadata and receive a cybersecurity forensic report with visual gauges and benchmarks immediately.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Fake Accounts Matter Section -->
+    <section id="why-it-matters" class="section-container bg-surface">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">Cyber Threat Landscape</span>
+          <h2 class="section-title">Why Fake Social Media Accounts Are a Major Problem</h2>
+          <p class="section-subtitle">
+            Automated bots and fraudulent profiles compromise digital trust, manipulate opinions, and threaten cybersecurity across platforms.
+          </p>
+        </div>
+
+        <div class="problem-grid">
+          <div class="problem-card">
+            <div class="problem-badge">01</div>
+            <h4>Disinformation & Astroturfing</h4>
+            <p>Coordinated bot clusters artificially boost divisive narratives, manipulate public sentiment during elections, and fabricate artificial consensus.</p>
+          </div>
+
+          <div class="problem-card">
+            <div class="problem-badge">02</div>
+            <h4>Phishing & Financial Scams</h4>
+            <p>Fake accounts impersonate brands, customer support, or influencers to distribute malicious links, cryptocurrency scams, and credential harvesters.</p>
+          </div>
+
+          <div class="problem-card">
+            <div class="problem-badge">03</div>
+            <h4>Inauthentic Metrics & Ad Fraud</h4>
+            <p>Commercial bot networks sell fake followers and likes, siphoning billions in digital advertising budgets and deceiving legitimate sponsors.</p>
+          </div>
+
+          <div class="problem-card">
+            <div class="problem-badge">04</div>
+            <h4>Identity Theft & Harassment</h4>
+            <p>Cloned accounts steal genuine profile pictures and user bios to deceive friends and family into transferring money or disclosing sensitive data.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Account Analysis Form Section -->
+    <section id="detect" class="section-container">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">Forensic Input Console</span>
+          <h2 class="section-title">Analyze Social Media Account</h2>
+          <p class="section-subtitle">
+            Enter the publicly visible statistics of any account to evaluate its authenticity profile.
+          </p>
+        </div>
+
+        <div class="form-wrapper">
+          <!-- Quick Load Presets -->
+          <div class="presets-card">
+            <div class="presets-header">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                <polyline points="13 2 13 9 20 9"/>
+              </svg>
+              <span>Quick-Load Demo Test Profiles (For Hackathon Review)</span>
+            </div>
+            <div class="presets-buttons">
+              <button type="button" class="preset-btn" data-preset="genuine_user">
+                <span class="preset-indicator genuine"></span> Genuine Everyday User
+              </button>
+              <button type="button" class="preset-btn" data-preset="spam_bot">
+                <span class="preset-indicator fake"></span> Aggressive Follower Bot
+              </button>
+              <button type="button" class="preset-btn" data-preset="scam_promo">
+                <span class="preset-indicator fake"></span> Phishing / Scam Account
+              </button>
+              <button type="button" class="preset-btn" data-preset="lurker_bot">
+                <span class="preset-indicator warning"></span> Inactive Scraper Bot
+              </button>
+            </div>
+          </div>
+
+          <!-- Privacy Guarantee Notice -->
+          <div class="privacy-notice">
+            <div class="privacy-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+            <div class="privacy-text">
+              <strong>Strict Privacy Safeguard:</strong> This tool only examines public surface metrics (followers, posts, account age). We will <em>never</em> request passwords, OAuth tokens, private messages, or account credentials.
+            </div>
+          </div>
+
+          <!-- Analysis Form -->
+          <form id="account-form" class="detection-form" novalidate>
+            <div class="form-grid">
+              
+              <!-- 1. Followers Count -->
+              <div class="form-group">
+                <label for="followers_count" class="form-label">
+                  1. Followers Count <span class="required">*</span>
+                  <span class="field-hint">Accounts following this user</span>
+                </label>
+                <div class="input-with-icon">
+                  <input type="number" id="followers_count" name="followers_count" min="0" max="100000000" placeholder="e.g. 450" required>
+                  <span class="input-unit">users</span>
+                </div>
+                <span class="error-text" id="err-followers_count"></span>
+              </div>
+
+              <!-- 2. Following Count -->
+              <div class="form-group">
+                <label for="following_count" class="form-label">
+                  2. Following Count <span class="required">*</span>
+                  <span class="field-hint">Accounts this user follows</span>
+                </label>
+                <div class="input-with-icon">
+                  <input type="number" id="following_count" name="following_count" min="0" max="1000000" placeholder="e.g. 380" required>
+                  <span class="input-unit">users</span>
+                </div>
+                <span class="error-text" id="err-following_count"></span>
+              </div>
+
+              <!-- 3. Posts Count -->
+              <div class="form-group">
+                <label for="posts_count" class="form-label">
+                  3. Number of Posts <span class="required">*</span>
+                  <span class="field-hint">Public photos, tweets, or videos</span>
+                </label>
+                <div class="input-with-icon">
+                  <input type="number" id="posts_count" name="posts_count" min="0" max="500000" placeholder="e.g. 120" required>
+                  <span class="input-unit">posts</span>
+                </div>
+                <span class="error-text" id="err-posts_count"></span>
+              </div>
+
+              <!-- 4. Account Age Dropdown -->
+              <div class="form-group">
+                <label for="account_age_bracket" class="form-label">
+                  4. Account Age <span class="required">*</span>
+                  <span class="field-hint">Approximate duration since account creation</span>
+                </label>
+                <div class="input-with-icon">
+                  <select id="account_age_bracket" name="account_age_bracket" required>
+                    <option value="" disabled selected>Select Account Age...</option>
+                    <option value="0">Less than 1 month</option>
+                    <option value="1">1–6 months</option>
+                    <option value="2">6–12 months</option>
+                    <option value="3">1–2 years</option>
+                    <option value="4">More than 2 years</option>
+                  </select>
+                  <span class="select-arrow">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                  </span>
+                </div>
+                <span class="error-text" id="err-account_age_bracket"></span>
+              </div>
+
+              <!-- 5. Profile Picture Available (Yes/No) -->
+              <div class="form-group">
+                <label class="form-label">
+                  5. Profile Picture Available? <span class="required">*</span>
+                  <span class="field-hint">Has the user uploaded an avatar photo?</span>
+                </label>
+                <div class="segmented-control">
+                  <label class="segment-option">
+                    <input type="radio" name="has_profile_pic" value="1" checked>
+                    <span class="segment-pill">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                      Yes (Avatar Set)
+                    </span>
+                  </label>
+                  <label class="segment-option">
+                    <input type="radio" name="has_profile_pic" value="0">
+                    <span class="segment-pill">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                      No (Default)
+                    </span>
+                  </label>
+                </div>
+                <span class="error-text" id="err-has_profile_pic"></span>
+              </div>
+
+              <!-- 6. Does the account have a bio? (Yes/No) -->
+              <div class="form-group">
+                <label class="form-label">
+                  6. Does the account have a bio? <span class="required">*</span>
+                  <span class="field-hint">Is the profile bio section written?</span>
+                </label>
+                <div class="segmented-control">
+                  <label class="segment-option">
+                    <input type="radio" name="has_bio" value="1" checked>
+                    <span class="segment-pill">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                      Yes (Has Bio)
+                    </span>
+                  </label>
+                  <label class="segment-option">
+                    <input type="radio" name="has_bio" value="0">
+                    <span class="segment-pill">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                      No (Empty)
+                    </span>
+                  </label>
+                </div>
+                <span class="error-text" id="err-has_bio"></span>
+              </div>
+
+              <!-- 7. Does the bio contain an external link? (Yes/No) -->
+              <div class="form-group">
+                <label class="form-label">
+                  7. Does the bio contain an external link? <span class="required">*</span>
+                  <span class="field-hint">Links to website, Linktree, Telegram, etc.</span>
+                </label>
+                <div class="segmented-control">
+                  <label class="segment-option">
+                    <input type="radio" name="has_external_link" value="1">
+                    <span class="segment-pill">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                      Yes (Has Link)
+                    </span>
+                  </label>
+                  <label class="segment-option">
+                    <input type="radio" name="has_external_link" value="0" checked>
+                    <span class="segment-pill">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                      No (No Links)
+                    </span>
+                  </label>
+                </div>
+                <span class="error-text" id="err-has_external_link"></span>
+              </div>
+
+              <!-- 8. Account Type (Public / Private) - Optional -->
+              <div class="form-group">
+                <label class="form-label">
+                  8. Account Type <span class="optional-badge">Optional</span>
+                  <span class="field-hint">Profile privacy visibility setting</span>
+                </label>
+                <div class="segmented-control">
+                  <label class="segment-option">
+                    <input type="radio" name="account_type" value="public" checked>
+                    <span class="segment-pill">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                      Public
+                    </span>
+                  </label>
+                  <label class="segment-option">
+                    <input type="radio" name="account_type" value="private">
+                    <span class="segment-pill">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                      Private
+                    </span>
+                  </label>
+                </div>
+                <span class="error-text" id="err-account_type"></span>
+              </div>
+
+            </div>
+
+            <!-- Global Form Error Banner -->
+            <div id="form-error-banner" class="alert-box alert-danger hidden">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <div id="form-error-message"></div>
+            </div>
+
+            <!-- Form Action Buttons -->
+            <div class="form-actions">
+              <button type="button" id="btn-reset" class="btn btn-secondary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                  <path d="M3 3v5h5"/>
+                </svg>
+                Reset Fields
+              </button>
+              
+              <button type="submit" id="btn-submit" class="btn btn-primary btn-submit-glow">
+                <span class="btn-text">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="m9 12 2 2 4-4"/>
+                  </svg>
+                  Analyze Account
+                </span>
+                <span class="spinner hidden" id="btn-spinner"></span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- Results Dashboard Section (Dynamically updated & revealed)     -->
+        <!-- ============================================================== -->
+        <div id="results-section" class="results-container hidden">
+          <div class="results-card" id="results-card-inner">
+            
+            <div class="results-header">
+              <div class="results-header-left">
+                <span class="results-kicker">Forensic Analysis Report</span>
+                <h3 class="results-title">Account Authenticity Assessment</h3>
+              </div>
+              <div class="results-header-right">
+                <span class="timestamp-badge" id="res-timestamp">Analyzed Just Now</span>
+              </div>
+            </div>
+
+            <!-- Main Score & Verdict Grid -->
+            <div class="verdict-grid">
+              
+              <!-- Circular Risk Gauge -->
+              <div class="gauge-card">
+                <div class="gauge-container">
+                  <svg class="gauge-svg" viewBox="0 0 120 120">
+                    <circle class="gauge-bg" cx="60" cy="60" r="50"></circle>
+                    <circle class="gauge-progress" id="gauge-progress-circle" cx="60" cy="60" r="50" stroke-dasharray="314.15" stroke-dashoffset="314.15"></circle>
+                  </svg>
+                  <div class="gauge-inner-text">
+                    <span class="gauge-number" id="res-risk-percentage">0%</span>
+                    <span class="gauge-caption">Risk Score</span>
+                  </div>
+                </div>
+                <div class="gauge-level-badge" id="res-risk-level-badge">Evaluating</div>
+              </div>
+
+              <!-- Primary Classification Verdict -->
+              <div class="verdict-details">
+                <div class="verdict-status-row">
+                  <span class="classification-pill" id="res-classification-pill">Analyzing...</span>
+                  <span class="confidence-badge" id="res-confidence-badge">Confidence: --</span>
+                </div>
+                
+                <h2 class="verdict-heading" id="res-verdict-heading">Evaluating Account Profile</h2>
+                
+                <p class="verdict-summary" id="res-summary-text">
+                  Processing model probabilities across behavioral features...
+                </p>
+
+                <!-- Probability split bar -->
+                <div class="prob-split-wrapper">
+                  <div class="prob-labels">
+                    <span>Likely Genuine: <strong id="res-genuine-pct">0%</strong></span>
+                    <span>Suspicious / Bot: <strong id="res-fake-pct">0%</strong></span>
+                  </div>
+                  <div class="prob-bar-track">
+                    <div class="prob-bar-fill-genuine" id="prob-fill-genuine" style="width: 50%;"></div>
+                    <div class="prob-bar-fill-fake" id="prob-fill-fake" style="width: 50%;"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Granular Factor Breakdown -->
+            <div class="factors-section">
+              <h4 class="factors-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="16" x2="12" y2="12"/>
+                  <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                Behavioral Factors & Model Explainability
+              </h4>
+
+              <div class="factors-grid">
+                <!-- Risk Factors -->
+                <div class="factor-column">
+                  <div class="factor-column-header text-danger">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/>
+                      <line x1="12" y1="8" x2="12" y2="12"/>
+                      <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    <span>Risk Factors Flagged (<span id="res-risk-count">0</span>)</span>
+                  </div>
+                  <div id="risk-factors-list" class="factors-list">
+                    <!-- Populated by JS -->
+                  </div>
+                </div>
+
+                <!-- Trust Factors -->
+                <div class="factor-column">
+                  <div class="factor-column-header text-success">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                      <path d="m9 12 2 2 4-4"/>
+                    </svg>
+                    <span>Trust Factors Detected (<span id="res-trust-count">0</span>)</span>
+                  </div>
+                  <div id="trust-factors-list" class="factors-list">
+                    <!-- Populated by JS -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submitted Feature Summary Table -->
+            <div class="feature-summary-box">
+              <h4 class="summary-table-title">Submitted Account Feature Profile</h4>
+              <div class="table-responsive">
+                <table class="summary-table">
+                  <thead>
+                    <tr>
+                      <th>Feature</th>
+                      <th>Submitted Value</th>
+                      <th>Typical Genuine Pattern</th>
+                      <th>Contextual Evaluation</th>
+                    </tr>
+                  </thead>
+                  <tbody id="summary-table-body">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Educational Disclaimer Card -->
+            <div class="disclaimer-callout">
+              <div class="disclaimer-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="8" x2="12" y2="12"/>
+                  <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+              </div>
+              <div class="disclaimer-text">
+                <strong>Educational Prototype Disclaimer:</strong> This risk score is an algorithmic approximation computed by a machine learning model based on statistical feature correlation. It does not possess direct access to platform databases or human identity verification, and cannot provide conclusive legal proof of account ownership or authenticity.
+              </div>
+            </div>
+
+            <!-- Results Action Buttons -->
+            <div class="results-actions">
+              <button type="button" id="btn-analyze-another" class="btn btn-secondary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                Analyze Another Account
+              </button>
+
+              <button type="button" id="btn-scroll-top" class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="18 15 12 9 6 15"/>
+                </svg>
+                Return to Top
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="section-container bg-surface">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">System Architecture</span>
+          <h2 class="section-title">How the Detection System Works</h2>
+          <p class="section-subtitle">
+            An end-to-end 5-step detection pipeline bridging front-end parameter collection with backend machine learning inference.
+          </p>
+        </div>
+
+        <div class="workflow-steps">
+          
+          <div class="workflow-step-card">
+            <div class="step-number">01</div>
+            <div class="step-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
+            </div>
+            <h4>Feature Input</h4>
+            <p>The user inputs 9 observable account parameters into the client-side form without entering any passwords or tokens.</p>
+          </div>
+
+          <div class="workflow-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+
+          <div class="workflow-step-card">
+            <div class="step-number">02</div>
+            <div class="step-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <h4>REST API Dispatch</h4>
+            <p>Vanilla JavaScript sends a POST request with the sanitized JSON payload to the Python Flask backend over HTTP/REST.</p>
+          </div>
+
+          <div class="workflow-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+
+          <div class="workflow-step-card">
+            <div class="step-number">03</div>
+            <div class="step-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <h4>Backend Validation</h4>
+            <p>Flask receives the request, enforces boundary and type constraints, and packages the 9-dimensional feature vector.</p>
+          </div>
+
+          <div class="workflow-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+
+          <div class="workflow-step-card">
+            <div class="step-number">04</div>
+            <div class="step-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <h4>Random Forest ML</h4>
+            <p>The pre-trained Scikit-learn Random Forest model generates class probabilities via 150 decision trees.</p>
+          </div>
+
+          <div class="workflow-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+
+          <div class="workflow-step-card">
+            <div class="step-number">05</div>
+            <div class="step-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+              </svg>
+            </div>
+            <h4>Explainable Dashboard</h4>
+            <p>Risk percentage, verdict badge, and heuristic factor breakdowns are dynamically displayed to the user.</p>
+          </div>
+
+        </div>
+
+        <!-- Architecture Flow Diagram Card -->
+        <div class="architecture-box">
+          <div class="arch-header">
+            <span class="arch-badge">TECH STACK INTEGRATION</span>
+            <h4>System Architecture Diagram</h4>
+          </div>
+          <div class="arch-diagram">
+            <div class="arch-node arch-client">
+              <span class="arch-role">Client Tier</span>
+              <h5>HTML5 + CSS3 + Vanilla JS</h5>
+              <p>Form Validation, Gauge Animation, REST Client</p>
+            </div>
+            <div class="arch-connector">
+              <span>JSON / HTTP POST</span>
+              <div class="arch-line"></div>
+            </div>
+            <div class="arch-node arch-server">
+              <span class="arch-role">Backend Tier</span>
+              <h5>Python Flask + Flask-CORS</h5>
+              <p>Input Sanitization, Routing, Explainability Engine</p>
+            </div>
+            <div class="arch-connector">
+              <span>Joblib Load</span>
+              <div class="arch-line"></div>
+            </div>
+            <div class="arch-node arch-ml">
+              <span class="arch-role">ML Inference Tier</span>
+              <h5>Scikit-Learn + NumPy</h5>
+              <p>Random Forest Ensemble (150 Estimators)</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section-container">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">Project Overview</span>
+          <h2 class="section-title">About the Project</h2>
+          <p class="section-subtitle">
+            Engineered as a 12-hour hackathon prototype demonstrating accessible machine learning applications in cybersecurity.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-card">
+            <div class="about-icon">🎯</div>
+            <h3>Project Objective</h3>
+            <p>
+              To construct a functional, transparent, and educational platform for evaluating social media account legitimacy without invasive credential requirements. Built specifically for college engineering hackathons.
+            </p>
+          </div>
+
+          <div class="about-card">
+            <div class="about-icon">🌲</div>
+            <h3>Why Random Forest?</h3>
+            <p>
+              Random Forest excels with tabular metadata by handling non-linear feature interactions (e.g. high following with zero posts), resisting overfitting through bagging, and yielding transparent probability scores.
+            </p>
+          </div>
+
+          <div class="about-card">
+            <div class="about-icon">📊</div>
+            <h3>Dataset & Methodology</h3>
+            <p>
+              The current pipeline includes a statistically grounded synthetic demonstration dataset (3,000 samples) mirroring published bot research. The architecture is modular and supports plugging in real-world Kaggle/MIB datasets via automated column mapping.
+            </p>
+          </div>
+
+          <div class="about-card">
+            <div class="about-icon">⚠️</div>
+            <h3>Known Limitations</h3>
+            <p>
+              As a lightweight educational prototype, the system does not analyze natural language post semantics, computer vision avatars, or network graph topologies. Modern high-tier state-sponsored bots may mimic legitimate metrics.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <div class="logo-icon small">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <span class="footer-title">Fake Account Detector AI</span>
+        <p class="footer-tagline">12-Hour College Hackathon Engineering Project</p>
+      </div>
+
+      <div class="footer-tech-stack">
+        <span class="tech-tag">HTML5 / CSS3 / Vanilla JS</span>
+        <span class="tech-tag">Python 3</span>
+        <span class="tech-tag">Flask</span>
+        <span class="tech-tag">Scikit-Learn</span>
+        <span class="tech-tag">Joblib</span>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 AI-Based Fake Social Media Account Detection System. Built for educational & demonstration purposes.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
