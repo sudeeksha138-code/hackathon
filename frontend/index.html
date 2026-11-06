@@ -208,11 +208,163 @@
           <span class="section-tag">Forensic Input Console</span>
           <h2 class="section-title">Analyze Social Media Account</h2>
           <p class="section-subtitle">
-            Enter the publicly visible statistics of any account to evaluate its authenticity profile.
+            Paste a profile URL for automatic analysis, or use the manual form to enter account details directly.
           </p>
         </div>
 
         <div class="form-wrapper">
+
+          <!-- ============================================================ -->
+          <!-- URL-BASED ANALYSIS (Primary Method)                          -->
+          <!-- ============================================================ -->
+          <div id="url-analyzer-panel" class="url-analyzer-panel">
+
+            <div class="analyzer-mode-header">
+              <div class="mode-tabs">
+                <button type="button" class="mode-tab active" id="tab-url" onclick="switchTab('url')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                  </svg>
+                  Analyze by URL
+                </button>
+                <button type="button" class="mode-tab" id="tab-manual" onclick="switchTab('manual')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                  </svg>
+                  Manual Entry
+                </button>
+              </div>
+            </div>
+
+            <!-- URL Analyzer Content -->
+            <div id="url-tab-content" class="tab-content">
+
+              <!-- Privacy Notice -->
+              <div class="privacy-notice">
+                <div class="privacy-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                </div>
+                <div class="privacy-text">
+                  <strong>No Passwords Required:</strong> We only use publicly available data via official platform APIs. We never request login credentials, OAuth tokens, or private account access.
+                </div>
+              </div>
+
+              <!-- Platform Selection Cards -->
+              <div class="platform-select-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+                <span>1. Select Platform</span>
+              </div>
+              <div class="platform-cards" role="radiogroup" aria-label="Select social media platform">
+                <label class="platform-card platform-instagram" id="card-instagram">
+                  <input type="radio" name="url_platform" value="instagram" checked>
+                  <div class="platform-card-inner">
+                    <div class="platform-icon platform-icon-instagram">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <circle cx="12" cy="12" r="4"/>
+                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                      </svg>
+                    </div>
+                    <span class="platform-name">Instagram</span>
+                    <span class="platform-status" id="ig-api-status">Graph API</span>
+                  </div>
+                </label>
+
+                <label class="platform-card platform-facebook" id="card-facebook">
+                  <input type="radio" name="url_platform" value="facebook">
+                  <div class="platform-card-inner">
+                    <div class="platform-icon platform-icon-facebook">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                      </svg>
+                    </div>
+                    <span class="platform-name">Facebook</span>
+                    <span class="platform-status" id="fb-api-status">Graph API</span>
+                  </div>
+                </label>
+
+                <label class="platform-card platform-x" id="card-x">
+                  <input type="radio" name="url_platform" value="x">
+                  <div class="platform-card-inner">
+                    <div class="platform-icon platform-icon-x">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
+                    </div>
+                    <span class="platform-name">X / Twitter</span>
+                    <span class="platform-status" id="x-api-status">API v2</span>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Profile URL Input -->
+              <div class="url-input-group">
+                <div class="platform-select-label">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                  </svg>
+                  <span>2. Paste Profile URL</span>
+                </div>
+                <div class="url-input-wrapper">
+                  <input
+                    type="url"
+                    id="profile-url-input"
+                    placeholder="https://www.instagram.com/username/"
+                    autocomplete="off"
+                    spellcheck="false"
+                  >
+                  <span class="url-clear-btn" id="url-clear-btn" title="Clear URL" aria-label="Clear URL">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                  </span>
+                </div>
+                <div class="url-example-hint" id="url-example-hint">
+                  Example: <code>https://www.instagram.com/username/</code>
+                </div>
+                <span class="error-text" id="url-error-text"></span>
+              </div>
+
+              <!-- URL Analyze Button -->
+              <div class="url-analyze-actions">
+                <button type="button" id="btn-url-analyze" class="btn btn-primary btn-submit-glow btn-url-analyze">
+                  <span class="btn-text" id="url-btn-text">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                    </svg>
+                    Analyze Account
+                  </span>
+                  <span class="spinner hidden" id="url-btn-spinner"></span>
+                </button>
+              </div>
+
+              <!-- API Availability Notice -->
+              <div class="api-notice-box">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
+                  <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <div>
+                  <strong>API Data Availability:</strong>
+                  <span id="api-platform-note">Instagram and Facebook require approved API tokens. X (Twitter) works with a free Bearer Token. See <a href="#about">About</a> for setup instructions.</span>
+                </div>
+              </div>
+
+            </div><!-- /url-tab-content -->
+          </div><!-- /url-analyzer-panel -->
+
+          <!-- ============================================================ -->
+          <!-- MANUAL ENTRY FORM (Secondary / Fallback Method)             -->
+          <!-- ============================================================ -->
+          <div id="manual-tab-content" class="tab-content hidden">
+
           <!-- Quick Load Presets -->
           <div class="presets-card">
             <div class="presets-header">
@@ -450,6 +602,66 @@
               </button>
             </div>
           </form>
+          </div><!-- /manual-tab-content -->
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- Insufficient Data Panel (shown when API has no data)           -->
+        <!-- ============================================================== -->
+        <div id="insufficient-data-section" class="results-container hidden">
+          <div class="results-card insufficient-data-card">
+            <div class="results-header">
+              <div class="results-header-left">
+                <span class="results-kicker">Analysis Status</span>
+                <h3 class="results-title">Insufficient Data Available</h3>
+              </div>
+              <div class="results-header-right">
+                <span class="timestamp-badge" id="insuf-timestamp">Just Now</span>
+              </div>
+            </div>
+
+            <div class="insuf-body">
+              <div class="insuf-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="8" x2="12" y2="12"/>
+                  <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+              </div>
+              <div class="insuf-content">
+                <div class="insuf-platform-row">
+                  <span class="platform-badge" id="insuf-platform-badge">Platform</span>
+                  <span class="insuf-username" id="insuf-username">@username</span>
+                </div>
+                <p class="insuf-message" id="insuf-message">
+                  The key account metrics could not be retrieved from this platform.
+                </p>
+                <div id="insuf-notes-section"></div>
+                <div id="insuf-missing-section"></div>
+                <div class="insuf-alternatives">
+                  <h4>What you can do:</h4>
+                  <ul>
+                    <li>Switch to <strong>Manual Entry</strong> and enter the account stats yourself (look them up on the platform)</li>
+                    <li>Configure an API token for this platform (see <a href="#about">About</a> section)</li>
+                    <li>Try a different platform that supports API access</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="results-actions">
+              <button type="button" id="btn-insuf-manual" class="btn btn-primary" onclick="switchTab('manual'); document.getElementById('insufficient-data-section').classList.add('hidden');">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+                Switch to Manual Entry
+              </button>
+              <button type="button" class="btn btn-secondary" onclick="document.getElementById('insufficient-data-section').classList.add('hidden');">
+                Try Another URL
+              </button>
+            </div>
+          </div>
         </div>
 
         <!-- ============================================================== -->
@@ -457,7 +669,7 @@
         <!-- ============================================================== -->
         <div id="results-section" class="results-container hidden">
           <div class="results-card" id="results-card-inner">
-            
+
             <div class="results-header">
               <div class="results-header-left">
                 <span class="results-kicker">Forensic Analysis Report</span>
@@ -465,6 +677,28 @@
               </div>
               <div class="results-header-right">
                 <span class="timestamp-badge" id="res-timestamp">Analyzed Just Now</span>
+              </div>
+            </div>
+
+            <!-- Source Account Info Row (shown for URL-based analysis) -->
+            <div id="res-source-info" class="res-source-info hidden">
+              <div class="source-info-inner">
+                <span class="source-platform-badge" id="res-source-platform"></span>
+                <a class="source-username-link" id="res-source-url" href="#" target="_blank" rel="noopener noreferrer">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                  </svg>
+                  <span id="res-source-username">@username</span>
+                </a>
+                <span class="source-method-badge" id="res-extraction-method"></span>
+              </div>
+              <div id="res-missing-fields-notice" class="missing-fields-notice hidden">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
+                  <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <span id="res-missing-fields-text"></span>
               </div>
             </div>
 

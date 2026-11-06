@@ -2,7 +2,7 @@
  * Fake Account Detector AI - Frontend Application Controller
  * Handles REST API communication, live health check, input validation,
  * quick test presets, animated gauge rendering, and explainability dashboard.
- * Updated for the simplified 8-feature schema.
+ * Updated to support both URL-based analysis and manual feature entry.
  */
 
 // Determine API Base URL dynamically
@@ -85,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initPresets();
   initFormHandler();
   initUIInteractions();
+  initURLAnalyzer();
 });
 
 /**
@@ -569,4 +570,304 @@ function escapeHtml(text) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+// =============================================================================
+// TAB SWITCHING — URL vs Manual Entry
+// =============================================================================
+
+/**
+ * Switches between "Analyze by URL" and "Manual Entry" tabs.
+ * @param {'url'|'manual'} tab
+ */
+function switchTab(tab) {
+  const urlContent    = document.getElementById("url-tab-content");
+  const manualContent = document.getElementById("manual-tab-content");
+  const tabUrl        = document.getElementById("tab-url");
+  const tabManual     = document.getElementById("tab-manual");
+
+  if (!urlContent || !manualContent) return;
+
+  if (tab === "url") {
+    urlContent.classList.remove("hidden");
+    manualContent.classList.add("hidden");
+    tabUrl.classList.add("active");
+    tabManual.classList.remove("active");
+    updateURLPlaceholder();
+  } else {
+    manualContent.classList.remove("hidden");
+    urlContent.classList.add("hidden");
+    tabManual.classList.add("active");
+    tabUrl.classList.remove("active");
+  }
+}
+
+// =============================================================================
+// URL ANALYZER
+// =============================================================================
+
+const PLATFORM_URL_EXAMPLES = {
+  instagram: "https://www.instagram.com/username/",
+  facebook:  "https://www.facebook.com/pagename/",
+  x:         "https://x.com/username",
+};
+
+function initURLAnalyzer() {
+  const btn       = document.getElementById("btn-url-analyze");
+  const urlInput  = document.getElementById("profile-url-input");
+  const clearBtn  = document.getElementById("url-clear-btn");
+  const radios    = document.querySelectorAll("input[name='url_platform']");
+
+  if (!btn || !urlInput) return;
+
+  // Update placeholder when platform changes
+  radios.forEach(r => {
+    r.addEventListener("change", updateURLPlaceholder);
+  });
+
+  // Clear button
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      urlInput.value = "";
+      urlInput.classList.remove("input-error");
+      const errEl = document.getElementById("url-error-text");
+      if (errEl) errEl.textContent = "";
+      urlInput.focus();
+    });
+  }
+
+  // Analyze button
+  btn.addEventListener("click", handleURLAnalyze);
+
+  // Enter key on input
+  urlInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") handleURLAnalyze();
+  });
+
+  // Live URL validation feedback
+  urlInput.addEventListener("input", () => {
+    const errEl = document.getElementById("url-error-text");
+    if (errEl && urlInput.value.trim() === "") {
+      errEl.textContent = "";
+      urlInput.classList.remove("input-error");
+    }
+  });
+
+  updateURLPlaceholder();
+}
+
+function updateURLPlaceholder() {
+  const urlInput = document.getElementById("profile-url-input");
+  const hintEl   = document.getElementById("url-example-hint");
+  const platform = getSelectedPlatform();
+  if (!urlInput) return;
+
+  const example = PLATFORM_URL_EXAMPLES[platform] || "https://www.instagram.com/username/";
+  urlInput.placeholder = example;
+  if (hintEl) {
+    hintEl.innerHTML = `Example: <code>${escapeHtml(example)}</code>`;
+  }
+
+  // Update API notice
+  const noteEl = document.getElementById("api-platform-note");
+  if (noteEl) {
+    const notes = {
+      instagram: "Instagram Graph API requires an approved developer token (INSTAGRAM_ACCESS_TOKEN). Without it, only limited data is available.",
+      facebook:  "Facebook Graph API supports public Pages only. Personal profiles require user authorization. Set FACEBOOK_ACCESS_TOKEN.",
+      x:         "X API v2 Free tier supports public user lookups — just set X_BEARER_TOKEN. This is the most accessible option.",
+    };
+    noteEl.textContent = notes[platform] || "";
+  }
+}
+
+function getSelectedPlatform() {
+  const checked = document.querySelector("input[name='url_platform']:checked");
+  return checked ? checked.value : "instagram";
+}
+
+async function handleURLAnalyze() {
+  const urlInput  = document.getElementById("profile-url-input");
+  const btn       = document.getElementById("btn-url-analyze");
+  const spinner   = document.getElementById("url-btn-spinner");
+  const btnText   = document.getElementById("url-btn-text");
+  const errEl     = document.getElementById("url-error-text");
+
+  if (!urlInput || !btn) return;
+
+  const url      = urlInput.value.trim();
+  const platform = getSelectedPlatform();
+
+  // Client-side pre-flight validation
+  if (!url) {
+    showURLError("Please paste a profile URL before analyzing.");
+    urlInput.focus();
+    return;
+  }
+
+  if (!url.startsWith("http://") && !url.startsWith("https://")) {
+    showURLError("Please include https:// at the start of the URL.");
+    return;
+  }
+
+  // Check it looks like one of the supported platforms
+  const supportedDomains = [
+    "instagram.com", "facebook.com", "twitter.com", "x.com"
+  ];
+  const urlLower = url.toLowerCase();
+  const domainOk = supportedDomains.some(d => urlLower.includes(d));
+  if (!domainOk) {
+    showURLError("Only Instagram, Facebook, and X (Twitter) profile URLs are supported.");
+    return;
+  }
+
+  // Clear any previous errors
+  urlInput.classList.remove("input-error");
+  if (errEl) errEl.textContent = "";
+
+  // Hide previous results
+  hideAllResultPanels();
+
+  // Show loading state
+  btn.disabled = true;
+  if (spinner) spinner.classList.remove("hidden");
+  if (btnText) btnText.style.opacity = "0.4";
+
+  try {
+    const response = await fetch(`${API_BASE}/api/analyze-account`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ platform, profile_url: url }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      showURLError(data.error || "Analysis failed. Please check the URL and try again.");
+      return;
+    }
+
+    if (data.insufficient_data) {
+      renderInsufficientData(data);
+    } else {
+      // Full prediction — enrich result with source info then render
+      renderPredictionResults(data);
+      showSourceInfo(data);
+    }
+
+  } catch (err) {
+    showURLError(`Network error: ${err.message}. Ensure the backend is running on http://127.0.0.1:5000.`);
+  } finally {
+    btn.disabled = false;
+    if (spinner) spinner.classList.add("hidden");
+    if (btnText) btnText.style.opacity = "1";
+  }
+}
+
+function showURLError(msg) {
+  const urlInput = document.getElementById("profile-url-input");
+  const errEl    = document.getElementById("url-error-text");
+  if (urlInput) urlInput.classList.add("input-error");
+  if (errEl)    errEl.textContent = msg;
+}
+
+function hideAllResultPanels() {
+  const resultsSection = document.getElementById("results-section");
+  const insufSection   = document.getElementById("insufficient-data-section");
+  if (resultsSection) resultsSection.classList.add("hidden");
+  if (insufSection)   insufSection.classList.add("hidden");
+}
+
+function showSourceInfo(data) {
+  const row     = document.getElementById("res-source-info");
+  const badge   = document.getElementById("res-source-platform");
+  const link    = document.getElementById("res-source-url");
+  const usernameEl = document.getElementById("res-source-username");
+  const methodEl  = document.getElementById("res-extraction-method");
+  const missingNotice = document.getElementById("res-missing-fields-notice");
+  const missingText   = document.getElementById("res-missing-fields-text");
+
+  if (!row) return;
+  row.classList.remove("hidden");
+
+  // Platform badge
+  if (badge) {
+    badge.textContent = data.platform_label || data.platform;
+    badge.className = `source-platform-badge platform-${data.platform === "x" ? "x" : (data.platform === "instagram" ? "ig" : "fb")}`;
+  }
+
+  // Username link
+  if (link && usernameEl) {
+    link.href = data.profile_url || "#";
+    usernameEl.textContent = `@${data.username || ""}`;
+  }
+
+  // Extraction method
+  if (methodEl) {
+    methodEl.textContent = data.extraction_method
+      ? `via ${data.extraction_method.replace(/_/g, " ")}`
+      : "";
+  }
+
+  // Missing fields
+  const missing = data.missing_fields || [];
+  const estimated = data.estimated_fields || [];
+  if ((missing.length > 0 || estimated.length > 0) && missingNotice && missingText) {
+    missingNotice.classList.remove("hidden");
+    const allFlagged = [...new Set([...missing, ...estimated])];
+    missingText.textContent = `Some features unavailable or estimated: ${allFlagged.join(", ")}. Prediction may be less accurate.`;
+  } else if (missingNotice) {
+    missingNotice.classList.add("hidden");
+  }
+}
+
+function renderInsufficientData(data) {
+  const section   = document.getElementById("insufficient-data-section");
+  const timestamp = document.getElementById("insuf-timestamp");
+  const badge     = document.getElementById("insuf-platform-badge");
+  const username  = document.getElementById("insuf-username");
+  const message   = document.getElementById("insuf-message");
+  const notesSection   = document.getElementById("insuf-notes-section");
+  const missingSection = document.getElementById("insuf-missing-section");
+
+  if (!section) return;
+
+  if (timestamp) {
+    timestamp.textContent = `Analyzed: ${new Date().toLocaleTimeString()}`;
+  }
+
+  if (badge) {
+    badge.textContent = data.platform_label || data.platform;
+  }
+
+  if (username) {
+    username.textContent = `@${data.username || "unknown"}`;
+  }
+
+  if (message) {
+    message.textContent = data.message ||
+      "The key account metrics could not be retrieved from this platform via the API.";
+  }
+
+  // Notes from extractor
+  const notes = data.notes || [];
+  if (notesSection) {
+    if (notes.length > 0) {
+      notesSection.innerHTML = `<div class="insuf-notes-box">${notes.map(n => escapeHtml(n)).join("<br><br>")}</div>`;
+    } else {
+      notesSection.innerHTML = "";
+    }
+  }
+
+  // Missing fields
+  const missing = data.missing_fields || [];
+  if (missingSection) {
+    if (missing.length > 0) {
+      missingSection.innerHTML = `<div class="insuf-missing-box"><strong>Unavailable fields:</strong> ${missing.map(f => `<code>${escapeHtml(f)}</code>`).join(", ")}</div>`;
+    } else {
+      missingSection.innerHTML = "";
+    }
+  }
+
+  section.classList.remove("hidden");
+  section.scrollIntoView({ behavior: "smooth", block: "start" });
 }

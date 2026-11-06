@@ -1594,3 +1594,493 @@ body::before {
   }
 }
 
+
+/* ==========================================================================
+   URL ANALYZER — NEW PLATFORM SELECTION & URL INPUT STYLES
+   ========================================================================== */
+
+/* Mode Tabs ---------------------------------------------------------------- */
+.analyzer-mode-header {
+  margin-bottom: 1.8rem;
+}
+
+.mode-tabs {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.4rem;
+  width: fit-content;
+}
+
+.mode-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-main);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-secondary);
+  background: transparent;
+}
+
+.mode-tab:hover {
+  color: var(--text-main);
+  background: rgba(255,255,255,0.05);
+}
+
+.mode-tab.active {
+  background: var(--accent-indigo);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+}
+
+.mode-tab svg {
+  flex-shrink: 0;
+}
+
+/* Tab Content -------------------------------------------------------------- */
+.tab-content {
+  animation: fadeInUp 0.3s ease;
+}
+
+/* Platform Select Label ---------------------------------------------------- */
+.platform-select-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.9rem;
+}
+
+/* Platform Cards ----------------------------------------------------------- */
+.platform-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+}
+
+.platform-card {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-subtle);
+  background: var(--bg-input);
+  transition: all 0.25s ease;
+  overflow: hidden;
+}
+
+.platform-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.platform-card-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.4rem 1rem;
+}
+
+.platform-card:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.platform-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.platform-status {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Platform Icons */
+.platform-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.platform-icon-instagram {
+  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: #fff;
+}
+
+.platform-icon-facebook {
+  background: #1877f2;
+  color: #fff;
+}
+
+.platform-icon-x {
+  background: #000;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+/* Selected platform card states */
+.platform-instagram:has(input:checked) {
+  border-color: #e1306c;
+  background: rgba(225, 48, 108, 0.08);
+  box-shadow: 0 0 0 1px rgba(225, 48, 108, 0.3), 0 4px 16px rgba(225, 48, 108, 0.15);
+}
+
+.platform-facebook:has(input:checked) {
+  border-color: #1877f2;
+  background: rgba(24, 119, 242, 0.08);
+  box-shadow: 0 0 0 1px rgba(24, 119, 242, 0.3), 0 4px 16px rgba(24, 119, 242, 0.15);
+}
+
+.platform-x:has(input:checked) {
+  border-color: #e7e9ea;
+  background: rgba(231, 233, 234, 0.05);
+  box-shadow: 0 0 0 1px rgba(231, 233, 234, 0.2), 0 4px 16px rgba(231, 233, 234, 0.08);
+}
+
+/* URL Input Group --------------------------------------------------------- */
+.url-input-group {
+  margin-bottom: 1.5rem;
+}
+
+.url-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.url-input-wrapper input[type="url"] {
+  width: 100%;
+  padding: 0.9rem 3rem 0.9rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.url-input-wrapper input[type="url"]:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+.url-input-wrapper input.input-error {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.url-clear-btn {
+  position: absolute;
+  right: 0.75rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.url-clear-btn:hover {
+  color: var(--text-main);
+  background: rgba(255,255,255,0.1);
+}
+
+.url-example-hint {
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.url-example-hint code {
+  color: var(--accent-cyan);
+  background: rgba(56, 189, 248, 0.1);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+}
+
+/* URL Analyze Button ------------------------------------------------------- */
+.url-analyze-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.2rem;
+}
+
+.btn-url-analyze {
+  min-width: 200px;
+}
+
+/* API Notice Box ----------------------------------------------------------- */
+.api-notice-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.9rem 1.1rem;
+  background: rgba(56, 189, 248, 0.05);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.api-notice-box svg {
+  flex-shrink: 0;
+  color: var(--accent-cyan);
+  margin-top: 1px;
+}
+
+.api-notice-box a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+}
+
+.api-notice-box a:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   RESULTS — Source Info Row (URL-based analysis meta)
+   ========================================================================== */
+
+.res-source-info {
+  margin: 0 0 1.4rem 0;
+  padding: 0.9rem 1.1rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.source-info-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.source-platform-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--accent-indigo);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.source-platform-badge.platform-ig   { background: rgba(225,48,108,0.12); color: #e1306c; border-color: rgba(225,48,108,0.3); }
+.source-platform-badge.platform-fb   { background: rgba(24,119,242,0.12); color: #1877f2; border-color: rgba(24,119,242,0.3); }
+.source-platform-badge.platform-x    { background: rgba(231,233,234,0.08); color: #e7e9ea; border-color: rgba(231,233,234,0.2); }
+
+.source-username-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--accent-cyan);
+  text-decoration: none;
+}
+
+.source-username-link:hover {
+  text-decoration: underline;
+}
+
+.source-method-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin-left: auto;
+}
+
+.missing-fields-notice {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+  font-size: 0.78rem;
+  color: var(--color-warning);
+}
+
+.missing-fields-notice svg {
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   INSUFFICIENT DATA PANEL
+   ========================================================================== */
+
+.insufficient-data-card {
+  border-color: var(--color-warning-border);
+  box-shadow: 0 0 24px rgba(245, 158, 11, 0.08);
+}
+
+.insuf-body {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+  align-items: flex-start;
+}
+
+.insuf-icon {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--color-warning-bg);
+  border: 2px solid var(--color-warning-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-warning);
+}
+
+.insuf-content {
+  flex: 1;
+}
+
+.insuf-platform-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.8rem;
+}
+
+.platform-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(99,102,241,0.15);
+  color: var(--accent-indigo);
+  border: 1px solid rgba(99,102,241,0.3);
+}
+
+.insuf-username {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.insuf-message {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.insuf-notes-box {
+  background: rgba(245, 158, 11, 0.07);
+  border: 1px solid var(--color-warning-border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.82rem;
+  color: var(--color-warning);
+  line-height: 1.6;
+}
+
+.insuf-missing-box {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.insuf-alternatives {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid var(--color-success-border);
+  border-radius: var(--radius-sm);
+}
+
+.insuf-alternatives h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-success);
+  margin: 0 0 0.6rem 0;
+}
+
+.insuf-alternatives ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.insuf-alternatives li {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ==========================================================================
+   RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .platform-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .platform-card-inner {
+    flex-direction: row;
+    padding: 1rem;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  .platform-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .insuf-body {
+    flex-direction: column;
+  }
+
+  .insuf-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .mode-tabs {
+    width: 100%;
+  }
+
+  .mode-tab {
+    flex: 1;
+    justify-content: center;
+  }
+}

@@ -125,5 +125,30 @@ class FakeAccountDetectionTests(unittest.TestCase):
         r_js = self.app.get("/script.js")
         self.assertEqual(r_js.status_code, 200)
 
+    def test_08_analyze_account_url_validation_rejection(self):
+        """Verify POST /api/analyze-account rejects invalid/unsupported URLs."""
+        # Non-social media domain
+        payload = {"platform": "instagram", "profile_url": "https://evil.com/fake"}
+        res = self.app.post("/api/analyze-account", data=json.dumps(payload), content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+        data = res.get_json()
+        self.assertFalse(data["success"])
+
+        # Post URL instead of profile URL
+        payload = {"platform": "instagram", "profile_url": "https://www.instagram.com/p/C3x9_z/"}
+        res = self.app.post("/api/analyze-account", data=json.dumps(payload), content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+
+    def test_09_analyze_account_valid_url_handling(self):
+        """Verify POST /api/analyze-account handles valid profile URL without crashing."""
+        payload = {"platform": "instagram", "profile_url": "https://www.instagram.com/natgeo/"}
+        res = self.app.post("/api/analyze-account", data=json.dumps(payload), content_type="application/json")
+        self.assertEqual(res.status_code, 200)
+        data = res.get_json()
+        self.assertTrue(data["success"])
+        self.assertEqual(data["platform"], "instagram")
+        self.assertEqual(data["username"], "natgeo")
+        self.assertTrue(data["insufficient_data"])
+
 if __name__ == "__main__":
     unittest.main()

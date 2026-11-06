@@ -58,15 +58,22 @@ Fake social media accounts inflict widespread societal and economic harm:
 hackathon/
 │
 ├── frontend/
-│   ├── index.html                 # Complete UI: Hero, Form, Results, Architecture, About
-│   ├── style.css                  # Cybersecurity styling, gauges, animations, responsiveness
-│   └── script.js                  # Fetch API, live validation, gauge animation, presets
+│   ├── index.html                 # Complete UI: URL Analyzer, Manual Form, Results, Architecture, About
+│   ├── style.css                  # Cybersecurity styling, platform cards, gauges, animations
+│   └── script.js                  # Fetch API, live validation, URL analysis, gauge animation, presets
 │
 ├── backend/
-│   ├── app.py                     # Flask REST API & static file server
+│   ├── app.py                     # Flask REST API (/api/predict, /api/analyze-account)
 │   ├── model.py                   # Inference engine, input validator, explainability logic
 │   ├── train_model.py             # ML training pipeline, evaluation, artifact export
-│   └── test_app.py                # Automated unit test suite (7 automated tests)
+│   ├── test_app.py                # Automated unit test suite (9 automated tests)
+│   ├── extractors/                # Platform-specific public data extractors
+│   │   ├── instagram_extractor.py # Meta Graph API / oEmbed integration for Instagram
+│   │   ├── facebook_extractor.py  # Graph API page data extractor for Facebook
+│   │   └── x_extractor.py         # X API v2 (public_metrics, user lookup) extractor
+│   └── utils/
+│       ├── url_validator.py       # SSRF protection, platform allowlisting, username extraction
+│       └── feature_processor.py   # Feature normalization, safe defaults, missing feature tracker
 │
 ├── dataset/
 │   ├── generate_dataset.py        # Generates realistic synthetic benchmark dataset
@@ -77,6 +84,7 @@ hackathon/
 │   ├── fake_account_model.pkl     # Trained Random Forest classifier pipeline
 │   └── model_metrics.json         # Computed test-set evaluation metrics & importances
 │
+├── .env.example                   # Template for platform API keys (X, Instagram, Facebook)
 ├── requirements.txt               # Python package dependencies
 ├── run.py                         # One-click startup runner
 └── README.md                      # Comprehensive documentation (this file)
