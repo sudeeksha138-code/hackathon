@@ -38,7 +38,7 @@ from sklearn.metrics import (
     classification_report
 )
 
-FEATURE_NAMES = [
+RAW_FEATURE_NAMES = [
     "followers_count",
     "following_count",
     "posts_count",
@@ -48,6 +48,14 @@ FEATURE_NAMES = [
     "has_profile_pic",
     "is_private"
 ]
+
+ENGINEERED_FEATURE_NAMES = [
+    "follower_following_ratio",
+    "follow_asymmetry",
+    "post_rate_per_age"
+]
+
+FEATURE_NAMES = RAW_FEATURE_NAMES + ENGINEERED_FEATURE_NAMES
 TARGET_NAME = "is_fake"
 
 # Flexible column aliases for mapping real-world datasets
@@ -60,6 +68,9 @@ COLUMN_ALIASES = {
     "has_external_link": ["has_external_link", "has_link", "external_url_present", "external_link"],
     "has_profile_pic": ["has_profile_pic", "profile_pic", "has_avatar", "default_profile_image"],
     "is_private": ["is_private", "private", "account_type_private", "is_protected"],
+    "follower_following_ratio": ["follower_following_ratio", "follower_ratio", "follow_ratio"],
+    "follow_asymmetry": ["follow_asymmetry", "asymmetry"],
+    "post_rate_per_age": ["post_rate_per_age", "post_rate"],
     "is_fake": ["is_fake", "fake", "is_bot", "label", "class", "target", "spammer"]
 }
 
@@ -107,9 +118,10 @@ def load_and_preprocess_dataset(csv_path: str):
                 matched_idx = headers.index(std_col)
             col_indices[std_col] = matched_idx
 
-        missing_features = [col for col, idx in col_indices.items() if idx == -1]
-        if missing_features:
-            raise ValueError(f"Dataset is missing required columns or aliases for: {missing_features}. Available headers: {headers}")
+        # Check raw features first
+        missing_raw = [col for col in RAW_FEATURE_NAMES if col_indices.get(col, -1) == -1]
+        if missing_raw:
+            raise ValueError(f"Dataset is missing required columns or aliases for: {missing_raw}. Available headers: {headers}")
 
         X_rows = []
         y_rows = []
@@ -119,7 +131,36 @@ def load_and_preprocess_dataset(csv_path: str):
             if not row or len(row) < len(headers):
                 continue
             try:
-                features = [float(row[col_indices[col]]) for col in FEATURE_NAMES]
+                followers = float(row[col_indices["followers_count"]])
+                following = float(row[col_indices["following_count"]])
+                posts = float(row[col_indices["posts_count"]])
+                age_bracket = float(row[col_indices["account_age_bracket"]])
+                has_bio = float(row[col_indices["has_bio"]])
+                has_link = float(row[col_indices["has_external_link"]])
+                has_pic = float(row[col_indices["has_profile_pic"]])
+                is_private = float(row[col_indices["is_private"]])
+
+                # Engineered features (read if in file, else compute dynamically)
+                if col_indices.get("follower_following_ratio", -1) != -1:
+                    ratio = float(row[col_indices["follower_following_ratio"]])
+                else:
+                    ratio = followers / (following + 1.0)
+
+                if col_indices.get("follow_asymmetry", -1) != -1:
+                    asym = float(row[col_indices["follow_asymmetry"]])
+                else:
+                    asym = (following - followers) / (following + followers + 1.0)
+
+                if col_indices.get("post_rate_per_age", -1) != -1:
+                    rate = float(row[col_indices["post_rate_per_age"]])
+                else:
+                    rate = posts / (age_bracket + 1.0)
+
+                features = [
+                    followers, following, posts, age_bracket,
+                    has_bio, has_link, has_pic, is_private,
+                    ratio, asym, rate
+                ]
                 label = int(float(row[col_indices[TARGET_NAME]]))
                 X_rows.append(features)
                 y_rows.append(label)
